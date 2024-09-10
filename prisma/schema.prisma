@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id    String    @id @default(cuid())
+  name  String
+  email String    @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//1. generator client
+// generator client {
+//   provider = "prisma-client-js"
+// }
+// generator client: Prisma akan menghasilkan sebuah Prisma Client berdasarkan skema ini. Client ini berupa JavaScript/TypeScript API yang memungkinkanmu untuk berinteraksi dengan database.
+// provider = "prisma-client-js": Menentukan bahwa Prisma akan menghasilkan client dalam bentuk JavaScript/TypeScript (prisma-client-js).
+
+// 2. datasource db
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+// datasource db: Bagian ini mendefinisikan sumber data (database) yang akan digunakan Prisma.
+// provider = "postgresql": Menyatakan bahwa database yang digunakan adalah PostgreSQL.
+// url = env("DATABASE_URL"): Mengambil URL koneksi database dari variabel lingkungan DATABASE_URL. URL ini mengandung informasi seperti host, username, password, dan nama database yang akan dihubungkan.
+
+// 3. model User
+// model User {
+//   id    String    @id @default(cuid())
+//   name  String
+//   email String    @unique
+//   password String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+// model User: Ini mendefinisikan model atau tabel User di dalam database.
+
+// Field-field di dalam model ini:
+
+// id: Tipe data String, ini akan menjadi primary key (@id). @default(cuid()) berarti nilai defaultnya adalah ID yang dihasilkan oleh fungsi cuid(), yang membuat ID unik.
+// name: Tipe data String, menyimpan nama pengguna.
+// email: Tipe data String, menyimpan email pengguna. Diberi constraint @unique, yang berarti setiap email harus unik dan tidak boleh ada duplikasi.
+// password: Tipe data String, menyimpan kata sandi pengguna.
+// createdAt: Tipe data DateTime, menyimpan waktu pembuatan record. @default(now()) berarti secara otomatis akan diisi dengan waktu saat record dibuat.
+// updatedAt: Tipe data DateTime, menyimpan waktu kapan record terakhir diperbarui. @updatedAt memastikan bahwa setiap kali record diperbarui, nilai ini secara otomatis di-update.
+// Kesimpulan:
+// Kode ini mendefinisikan model User di database PostgreSQL menggunakan Prisma. Model ini mengandung informasi dasar seperti id, name, email, password, serta mencatat kapan record dibuat dan diperbarui.
